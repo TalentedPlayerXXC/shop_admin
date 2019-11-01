@@ -198,29 +198,28 @@ export default {
     },
     // 校验表单(vaildate) 并添加
     addUser() {
-      this.$refs.addForm.validate(valid => {
+      this.$refs.addForm.validate(async valid => {
         if (valid) {
           // 成功发送axios请求
-          this.axios.post(`users`, this.addForm).then(res => {
-            let {
-              meta: { status }
-            } = res.data
-            if (status === 201) {
-              this.$message.success('添加成功')
-              // 关闭模态框
-              this.addDialogVisible = false
-              // 清空表单数据
-              this.$refs.addForm.resetFields()
-              // 求最大页码
-              this.total++
-              this.current = Math.ceil(this.total / this.pagesize)
-              // 重新渲染界面
-              this.getUserList()
-            } else {
-              this.$message.error('添加失败')
-            }
-            console.log(res.data)
-          })
+          let res = await this.axios.post(`users`, this.addForm)
+          let {
+            meta: { status }
+          } = res.data
+          if (status === 201) {
+            this.$message.success('添加成功')
+            // 关闭模态框
+            this.addDialogVisible = false
+            // 清空表单数据
+            this.$refs.addForm.resetFields()
+            // 求最大页码
+            this.total++
+            this.current = Math.ceil(this.total / this.pagesize)
+            // 重新渲染界面
+            this.getUserList()
+          } else {
+            this.$message.error('添加失败')
+          }
+          console.log(res.data)
         } else {
           console.log('验证失败')
           return false
@@ -235,28 +234,26 @@ export default {
     },
     // 校验表单(vaildate)并  修改用户信息
     editUser() {
-      this.$refs.editForm.validate(valid => {
+      this.$refs.editForm.validate(async valid => {
         if (valid) {
-          this.axios
-            .put(`users/${this.editForm.id}`, {
-              email: this.editForm.email,
-              mobile: this.editForm.mobile
-            })
-            .then(res => {
-              // console.log(res.data)
-              let {
-                meta: { status }
-              } = res.data
-              if (status === 200) {
-                // 关闭界面
-                this.editDialogVisible = false
-                // 重新渲染
-                this.getUserList()
-                this.$message.success('修改成功')
-              } else {
-                this.$message.error('修改失败')
-              }
-            })
+          let res = await this.axios.put(`users/${this.editForm.id}`, {
+            email: this.editForm.email,
+            mobile: this.editForm.mobile
+          })
+
+          // console.log(res.data)
+          let {
+            meta: { status }
+          } = res.data
+          if (status === 200) {
+            // 关闭界面
+            this.editDialogVisible = false
+            // 重新渲染
+            this.getUserList()
+            this.$message.success('修改成功')
+          } else {
+            this.$message.error('修改失败')
+          }
         } else {
           return false
         }
