@@ -172,7 +172,6 @@ export default {
 
         // 发送axios请求去删除用户
         let res = await this.axios.delete(`users/${row.id}`)
-
         let {
           meta: { status }
         } = res.data
@@ -240,7 +239,6 @@ export default {
             email: this.editForm.email,
             mobile: this.editForm.mobile
           })
-
           // console.log(res.data)
           let {
             meta: { status }
