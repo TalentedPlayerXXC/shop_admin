@@ -69,7 +69,7 @@ export default {
         this.$router.push('/login')
         this.$message.success('退出成功!')
       } catch (e) {
-        this.$message.error('已取消退出')
+        this.$message.info('已取消退出')
       }
     },
     handleOpen(key, keyPath) {

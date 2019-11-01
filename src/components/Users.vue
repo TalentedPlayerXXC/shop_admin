@@ -162,38 +162,34 @@ export default {
       }
     },
     // 删除用户
-    delUser(row) {
-      this.$confirm('此操作将永久删除该用户, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      })
-        .then(() => {
-          // 发送axios请求去删除用户
-          return this.axios.delete(`users/${row.id}`)
+    async delUser(row) {
+      try {
+        await this.$confirm('此操作将永久删除该用户, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
         })
-        .then(res => {
-          let {
-            meta: { status }
-          } = res.data
-          if (status === 200) {
-            this.$message.success('删除成功')
-            // 重新渲染
-            if (this.userList.length === 1 && this.current > 1) {
-              this.current--
-            }
-            // 删除成功后重新渲染
-            this.getUserList()
-          } else {
-            this.$message.danger('删除失败')
+
+        // 发送axios请求去删除用户
+        let res = await this.axios.delete(`users/${row.id}`)
+
+        let {
+          meta: { status }
+        } = res.data
+        if (status === 200) {
+          this.$message.success('删除成功')
+          // 重新渲染
+          if (this.userList.length === 1 && this.current > 1) {
+            this.current--
           }
-        })
-        .catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消删除'
-          })
-        })
+          // 删除成功后重新渲染
+          this.getUserList()
+        } else {
+          this.$message.danger('删除失败')
+        }
+      } catch (e) {
+        this.$message.info('已取消删除')
+      }
     },
     // 显示添加用户模态框
     showAddDialog() {
