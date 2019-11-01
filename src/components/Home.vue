@@ -54,29 +54,23 @@
 <script>
 export default {
   methods: {
-    logout() {
-      // 弹出消息框
-      this.$confirm('你确定要退出吗?', '温馨提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      })
-        .then(() => {
-          // 跳转到登陆页面
-          // 清除本地token
-          localStorage.removeItem('token')
-          this.$router.push('login')
-          this.$message({
-            type: 'success',
-            message: '退出成功!'
-          })
+    async logout() {
+      try {
+        // 弹出消息框
+        // await只会等成功的结果
+        await this.$confirm('你确定要退出吗?', '温馨提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
         })
-        .catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消退出'
-          })
-        })
+        // 跳转到登陆页面
+        // 清除本地token
+        localStorage.removeItem('token')
+        this.$router.push('/login')
+        this.$message.success('退出成功!')
+      } catch (e) {
+        this.$message.error('已取消退出')
+      }
     },
     handleOpen(key, keyPath) {
       console.log(key, keyPath)

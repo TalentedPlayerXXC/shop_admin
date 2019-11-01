@@ -142,6 +142,8 @@ export default {
     },
     // 搜索功能
     search() {
+      // 搜索的时候 让当前页等于1
+      this.current = 1
       this.getUserList()
     },
     // 改变状态
@@ -168,21 +170,23 @@ export default {
       })
         .then(() => {
           // 发送axios请求去删除用户
-          this.axios.delete(`users/${row.id}`).then(res => {
-            let {
-              meta: { status }
-            } = res.data
-            if (status === 200) {
-              this.$message.success('删除成功')
-              if (this.userList.length === 1 && this.current > 1) {
-                this.current--
-              }
-              // 删除成功后重新渲染
-              this.getUserList()
-            } else {
-              this.$message.danger('删除失败')
+          return this.axios.delete(`users/${row.id}`)
+        })
+        .then(res => {
+          let {
+            meta: { status }
+          } = res.data
+          if (status === 200) {
+            this.$message.success('删除成功')
+            // 重新渲染
+            if (this.userList.length === 1 && this.current > 1) {
+              this.current--
             }
-          })
+            // 删除成功后重新渲染
+            this.getUserList()
+          } else {
+            this.$message.danger('删除失败')
+          }
         })
         .catch(() => {
           this.$message({
@@ -263,6 +267,7 @@ export default {
       })
     }
   },
+  // 实例创建完成后被立即发送axios请求
   created() {
     this.getUserList()
   }
