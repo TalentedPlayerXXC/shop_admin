@@ -1,10 +1,10 @@
 import Vue from 'vue'
-import App from './App'
-import router from './router'
 // 引入element ui创建
 import ElementUI from 'element-ui'
 // 引入element ui 的样式
 import 'element-ui/lib/theme-chalk/index.css'
+import App from './App'
+import router from './router'
 // 引入通用样式
 import '@/assets/common.css'
 // 引入axios
