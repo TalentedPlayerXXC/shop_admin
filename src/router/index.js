@@ -8,6 +8,7 @@ import Home from '@/components/Home'
 import Users from '@/components/Users'
 // 导入Right.vue组件
 import Rights from '@/components/Rights'
+
 // 导入Roles.vue组件
 import Roles from '@/components/Roles'
 Vue.use(Router)

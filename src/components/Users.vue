@@ -13,7 +13,7 @@
     <!-- 用户添加 -->
     <el-button type="success" size="smail" plain @click="showAddDialog">用户添加</el-button>
     <!-- 需要表格组件 -->
-    <el-table :data="userList" stripe style="width: 100%" height="225">
+    <el-table :data="userList" stripe style="width: 100%">
       <el-table-column prop="username" label="姓名" width="200"></el-table-column>
       <el-table-column prop="email" label="邮箱" width="180"> </el-table-column>
       <el-table-column prop="mobile" label="电话" width="200"></el-table-column>
@@ -266,7 +266,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-
 .input-with-select {
   width: 300px;
   // margin-bottom: 2px;
