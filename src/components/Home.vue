@@ -1,49 +1,49 @@
 <template>
   <el-container class="home">
-    <el-header>
-      <div class="logo"></div>
-      <div class="logout">
-        <span>欢迎登入!</span>
-        <a href="javascript:;" @click="logout">退出</a>
-      </div>
-      <div class="title">
-        <h3>电商后台管理系统</h3>
-      </div>
-    </el-header>
-    <el-container direction="horizontal">
-      <el-aside width="200px">
-        <!-- el-menu导航组件 -->
-        <!--  default-active： 当前激活菜单的index -->
-        <!-- el-submenu： 子导航 -->
-        <!-- el-menu-item-group： 分组 -->
-        <!-- el-menu-item ：每一项的菜单  -->
-        <el-menu default-active="1-1" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b" unique-opened router>
-          <el-submenu index="1">
-            <template slot="title">
-              <i class="el-icon-location"></i>
-              <span>用户管理</span>
-            </template>
-            <el-menu-item index="/users">
-              <i class="el-icon-menu"></i>
-              <span slot="title">用户列表</span>
-            </el-menu-item>
-          </el-submenu>
-          <el-submenu index="2">
-            <template slot="title">
-              <i class="el-icon-location"></i>
-              <span>权限管理</span>
-            </template>
-            <el-menu-item index="/roles">
-              <i class="el-icon-menu"></i>
-              <span slot="title">用户列表</span>
-            </el-menu-item>
-            <el-menu-item index="/rights">
-              <i class="el-icon-menu"></i>
-              <span slot="title">权限列表</span>
-            </el-menu-item>
-          </el-submenu>
-        </el-menu>
-      </el-aside>
+    <el-aside width="200px">
+      <!-- el-menu导航组件 -->
+      <!--  default-active： 当前激活菜单的index -->
+      <!-- el-submenu： 子导航 -->
+      <!-- el-menu-item-group： 分组 -->
+      <!-- el-menu-item ：每一项的菜单  -->
+      <el-menu default-active="1-1" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b" unique-opened router>
+        <el-submenu index="1">
+          <template slot="title">
+            <i class="el-icon-location"></i>
+            <span>用户管理</span>
+          </template>
+          <el-menu-item index="/users">
+            <i class="el-icon-menu"></i>
+            <span slot="title">用户列表</span>
+          </el-menu-item>
+        </el-submenu>
+        <el-submenu index="2">
+          <template slot="title">
+            <i class="el-icon-location"></i>
+            <span>权限管理</span>
+          </template>
+          <el-menu-item index="/roles">
+            <i class="el-icon-menu"></i>
+            <span slot="title">用户列表</span>
+          </el-menu-item>
+          <el-menu-item index="/rights">
+            <i class="el-icon-menu"></i>
+            <span slot="title">权限列表</span>
+          </el-menu-item>
+        </el-submenu>
+      </el-menu>
+    </el-aside>
+    <el-container>
+      <el-header>
+        <div class="logo"></div>
+        <div class="logout">
+          <span>欢迎登入!</span>
+          <a href="javascript:;" @click="logout">退出</a>
+        </div>
+        <div class="title">
+          <h3>电商后台管理系统</h3>
+        </div>
+      </el-header>
       <el-main>
         <!-- 指定home组件中 子组件的出口 -->
         <router-view></router-view>
@@ -93,7 +93,8 @@ export default {
       width: 180px;
       height: 60px;
       float: left;
-      background: url('../assets/logo2.png');
+      background: url('../assets/logo2.png') no-repeat center center;
+      background-size: cover;
     }
     .logout {
       width: 180px;
@@ -116,7 +117,6 @@ export default {
       color: #fff;
     }
   }
-
   .el-aside {
     background-color: rgb(84, 92, 100);
     .el-submenu {
