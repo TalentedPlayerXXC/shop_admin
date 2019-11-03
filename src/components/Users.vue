@@ -97,7 +97,12 @@ export default {
         mobile: ''
       },
       // 用来修改用户数据
-      editForm: {},
+      editForm: {
+        id: '',
+        username: '',
+        email: '',
+        mobile: ''
+      },
       rules: {
         username: [{ required: true, message: '请输入用户名', trigger: 'blur' }, { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }],
         password: [{ required: true, message: '请输入密码', trigger: 'blur' }, { min: 6, max: 16, message: '长度在 6 到 16 个字符', trigger: 'blur' }],
@@ -229,7 +234,11 @@ export default {
     showEditDialog(row) {
       // 显示用户对话框
       this.editDialogVisible = true
-      this.editForm = row
+      // this.editForm = row
+      this.editForm.id = row.id
+      this.editForm.username = row.username
+      this.editForm.mobile = row.mobile
+      this.editForm.email = row.email
     },
     // 校验表单(vaildate)并  修改用户信息
     editUser() {

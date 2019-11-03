@@ -160,11 +160,6 @@ export default {
     showAddDialog() {
       this.addDialogVisible = true
     },
-    // 显示修改用户模态框
-    showEditDialog(row) {
-      this.editDialogVisible = true
-      this.editForm = row
-    },
     // 添加角色
     async addRole() {
       let res = await this.axios.post(`roles`, this.addForm)
@@ -182,6 +177,15 @@ export default {
       } else {
         this.$message.error('角色添加失败')
       }
+    },
+    // 显示修改用户模态框
+    showEditDialog(row) {
+      this.editDialogVisible = true
+      // 这里不能用  this.editForm = row  this.editForm直接指向了row
+      // this.editForm改变 row也跟着改变了
+      this.editForm.roleName = row.roleName
+      this.editForm.roleDesc = row.roleDesc
+      this.editForm.id = row.id
     },
     // 修改角色
     async editRole() {
