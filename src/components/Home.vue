@@ -6,29 +6,15 @@
       <!-- el-submenu： 子导航 -->
       <!-- el-menu-item-group： 分组 -->
       <!-- el-menu-item ：每一项的菜单  -->
-      <el-menu default-active="1-1" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b" unique-opened router>
-        <el-submenu index="1">
+      <el-menu :default-active="$route.path.slice(1)" class="el-menu-vertical-demo" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b" unique-opened router>
+        <el-submenu v-for="menu in menuList" :key="menu.id" :index="menu.path">
           <template slot="title">
             <i class="el-icon-location"></i>
-            <span>用户管理</span>
+            <span>{{ menu.authName }}</span>
           </template>
-          <el-menu-item index="/users">
+          <el-menu-item v-for="item in menu.children" :key="item.id" :index="item.path">
             <i class="el-icon-menu"></i>
-            <span slot="title">用户列表</span>
-          </el-menu-item>
-        </el-submenu>
-        <el-submenu index="2">
-          <template slot="title">
-            <i class="el-icon-location"></i>
-            <span>权限管理</span>
-          </template>
-          <el-menu-item index="/roles">
-            <i class="el-icon-menu"></i>
-            <span slot="title">用户列表</span>
-          </el-menu-item>
-          <el-menu-item index="/rights">
-            <i class="el-icon-menu"></i>
-            <span slot="title">权限列表</span>
+            <span slot="title">{{ item.authName }}</span>
           </el-menu-item>
         </el-submenu>
       </el-menu>
@@ -53,6 +39,11 @@
 </template>
 <script>
 export default {
+  data() {
+    return {
+      menuList: []
+    }
+  },
   methods: {
     // 退出
     async logout() {
@@ -72,12 +63,18 @@ export default {
       } catch (e) {
         this.$message.info('已取消退出')
       }
-    },
-    handleOpen(key, keyPath) {
-      console.log(key, keyPath)
-    },
-    handleClose(key, keyPath) {
-      console.log(key, keyPath)
+    }
+  },
+  async created() {
+    // 获取菜单列表
+    let res = await this.axios.get(`menus`)
+    let {
+      meta: { status },
+      data
+    } = res.data
+    if (status === 200) {
+      this.menuList = data
+      console.log(this.menuList)
     }
   }
 }
