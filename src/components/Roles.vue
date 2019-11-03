@@ -77,13 +77,13 @@
         <el-button type="primary" @click="editRole">确 定</el-button>
       </span>
     </el-dialog>
-    <!--修改角色的Dialog 对话框 -->
-    <el-dialog title="分配角色" :visible.sync="assignDialogVisible" width="40%">
+    <!--分配权限的Dialog 对话框 -->
+    <el-dialog title="分配角色" :visible.sync="assignDialogVisible" width="40%" @closed="clearRight">
       <!-- 树形菜单 -->
       <el-tree :data="rightList" show-checkbox default-expand-all node-key="id" ref="tree" highlight-current :props="defaultProps"> </el-tree>
       <span slot="footer" class="dialog-footer">
         <el-button @click="assignDialogVisible = false">取 消</el-button>
-        <el-button type="primary">分 配</el-button>
+        <el-button type="primary" @click="assignRight">分 配</el-button>
       </span>
     </el-dialog>
   </div>
@@ -108,7 +108,7 @@ export default {
         roleName: '',
         roleDesc: ''
       },
-      // 分配权限
+      // 分配权限模态框
       assignDialogVisible: false,
       // 默认的属性
       defaultProps: {
@@ -118,7 +118,9 @@ export default {
         label: 'authName'
       },
       // 存放所有权限列表
-      rightList: []
+      rightList: [],
+      // 用来保存角色的id
+      roleId: ''
     }
   },
   methods: {
@@ -225,6 +227,7 @@ export default {
     // 显示分配权限模态框
     async showAssignDialog(row) {
       this.assignDialogVisible = true
+      this.roleId = row.id
       // 发送请求 获取所有权限 树形结构
       let res = await this.axios.get(`rights/tree`)
       let {
@@ -247,6 +250,34 @@ export default {
       })
       // temp.push
       this.$refs.tree.setCheckedKeys(temp)
+    },
+    // 清空权限
+    clearRight() {
+      this.$refs.tree.setCheckedKeys([])
+    },
+    // 分配权限
+    async assignRight() {
+      // 获取角色 ，权限列表
+      console.log(this.roleId)
+      let keys = this.$refs.tree.getCheckedKeys()
+      let halfKeys = this.$refs.tree.getHalfCheckedKeys()
+      let rids = keys.concat(halfKeys).join() // join默认以 , 分割
+      // 发送请求
+      let res = await this.axios.post(`roles/${this.roleId}/rights`, {
+        rids
+      })
+      let {
+        meta: { status }
+      } = res.data
+      if (status === 200) {
+        // 关闭模态框
+        this.assignDialogVisible = false
+        this.$message.success('添加成功')
+        // 重新渲染
+        this.getRoleList()
+      } else {
+        this.$message.error('添加失败')
+      }
     }
   },
   created() {
