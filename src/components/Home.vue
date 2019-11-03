@@ -74,7 +74,6 @@ export default {
     } = res.data
     if (status === 200) {
       this.menuList = data
-      console.log(this.menuList)
     }
   }
 }

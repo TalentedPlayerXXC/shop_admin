@@ -12,14 +12,14 @@ import axios from 'axios'
 // 把axios放到Vue原型上将来vue所有的实例都能用axios
 Vue.prototype.axios = axios
 // 1.给axios配置默认值
-// axios.defaults.baseURL = 'http://localhost:8888/api/private/v1/'
+axios.defaults.baseURL = 'http://localhost:8888/api/private/v1/'
 // axios.defaults.headers.common['Authorization'] = localStorage.getItem('token')
 // 2. 给axios设置请求拦截器
 axios.interceptors.request.use(
   function(config) {
     // 在发送请求之前做些什么
     // 给config配置baseURL
-    config.baseURL = 'http://localhost:8888/api/private/v1/'
+    // config.baseURL = 'http://localhost:8888/api/private/v1/'
     // 给config设置headers
     config.headers.Authorization = localStorage.getItem('token')
     return config

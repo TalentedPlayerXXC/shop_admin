@@ -5,12 +5,13 @@ import Login from '@/components/Login'
 // 导入Home.vue组件
 import Home from '@/components/Home'
 // 导入Users.vue组件
-import Users from '@/components/Users'
+import Users from '@/components/users/Users'
 // 导入Right.vue组件
-import Rights from '@/components/Rights'
-
+import Rights from '@/components/rights/Rights'
+// 导入Categories.vue组件
+import Categories from '@/components/products/Categories'
 // 导入Roles.vue组件
-import Roles from '@/components/Roles'
+import Roles from '@/components/rights/Roles'
 Vue.use(Router)
 
 let router = new Router({
@@ -44,6 +45,11 @@ let router = new Router({
           path: '/roles',
           name: 'roles',
           component: Roles
+        },
+        {
+          path: '/categories',
+          name: 'categories',
+          component: Categories
         }
       ]
     }
