@@ -1,7 +1,7 @@
 <template>
   <div>
-    <el-button type="success" plain="plain">添加分类</el-button>
-    <el-table :data="categoriesList"  style="width: 100%" row-key="cat_id" :tree-props="{ children: 'children', hasChildren: 'hasChildren' }" v-loading="loading" element-loading-text="数据正在赶来的路上" element-loading-spinner="el-icon-loading" element-loading-background="rgba(255, 255, 255, 1)">
+    <el-button type="success" plain="plain" @click="showAddDialogVisible">添加分类</el-button>
+    <el-table :data="categoriesList" style="width: 100%" row-key="cat_id" :tree-props="{ children: 'children', hasChildren: 'hasChildren' }" v-loading="loading" element-loading-text="数据正在赶来的路上" element-loading-spinner="el-icon-loading" element-loading-background="rgba(255, 255, 255, 1)">
       <el-table-column prop="cat_name" label="分类名称" width="180"> </el-table-column>
       <el-table-column prop="cat_deleted" label="是否删除" width="180">
         <template slot-scope="scope">
@@ -9,7 +9,7 @@
         </template>
       </el-table-column>
       <el-table-column prop="cat_level" label="排序"> </el-table-column>
-      <el-table-column label="操作" width="">
+      <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button type="primary" icon="el-icon-edit" size="small" plain></el-button>
           <el-button type="danger" icon="el-icon-delete" size="small" plain></el-button>
@@ -18,6 +18,21 @@
     </el-table>
     <!--  分页 -->
     <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="current" :page-sizes="[6, 9, 20]" :page-size="pagesize" layout="total, sizes, prev, pager, next, jumper" :total="total"> </el-pagination>
+    <!-- 显示添加分类模态框 -->
+    <el-dialog title="添加商品分类" :visible.sync="addDialogVisible" width="40%">
+      <el-form ref="addForm" :model="addForm" :rules="rules" label-width="80px" status-icon>
+        <el-form-item label="分类名称" prop="cat_name">
+          <el-input v-model="addForm.cat_name"></el-input>
+        </el-form-item>
+        <el-form-item label="父级名称" prop="cat_pid">
+          <el-cascader v-model="addForm.cat_pid" :props="props" :options="options" clearable change-on-select></el-cascader>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="addDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="addCategory">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -28,10 +43,25 @@ export default {
       //   categoriesList: [],
       current: 1, // 页码
       pagesize: 6, // 每页条数
-      total: '', // 总条数
+      total: null, // 总条数
       loading: true, // 加载状态
       categoriesList: [],
-      hasChildren: true
+      hasChildren: true,
+      addDialogVisible: false,
+      // 添加商品分类
+      addForm: {
+        cat_name: '',
+        cat_pid: []
+      },
+      options: [],
+      props: {
+        value: 'cat_id',
+        label: 'cat_name',
+        childern: 'children'
+      },
+      rules: {
+        cat_name: [{ required: true, message: '请输入分类名称', trigger: 'blur' }]
+      }
     }
   },
   methods: {
@@ -51,11 +81,11 @@ export default {
       if (status === 200) {
         this.categoriesList = result
         this.total = total
+
         // 成功拿到数据之后停止加载状态
         setTimeout(() => {
           this.loading = false
         }, 500)
-        console.log(this.categoriesList)
       }
     },
     // 修改了当前页的页码
@@ -70,6 +100,46 @@ export default {
       this.loading = true
       this.current = val
       this.getCategoriesList()
+    },
+    async showAddDialogVisible() {
+      this.addDialogVisible = true
+      // 发送请求 获取分类的数据
+      let res = await this.axios.get(`categories?type=2`)
+      // console.log(res)
+      let {
+        meta: { status },
+        data
+      } = res.data
+      if (status === 200) {
+        this.options = data
+      }
+    },
+    // 添加商品分类
+    addCategory() {
+      this.$refs.addForm.validate(async valid => {
+        if (!valid) {
+          return false
+        }
+        // 发送请求
+        let { cat_pid, cat_name } = this.addForm
+        let res = await this.axios.post(`categories`, {
+          cat_pid: cat_pid[cat_pid.length - 1] || 0, // 但下拉框不选择的时候  传的pid为0也就是一级菜单
+          // cat_name: cat_name,
+          cat_name,
+          cat_level: cat_pid.length
+        })
+        let {
+          meta: { status, msg }
+        } = res.data
+        if (status === 201) {
+          this.addDialogVisible = false
+          this.$refs.addForm.resetFields()
+          this.getCategoriesList()
+          this.$message.success('添加商品分类信息成功')
+        } else {
+          this.$message.error(msg)
+        }
+      })
     }
   },
   created() {
