@@ -11,8 +11,8 @@
       <el-table-column prop="cat_level" label="排序"> </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button type="primary" icon="el-icon-edit" size="small" plain></el-button>
-          <el-button type="danger" icon="el-icon-delete" size="small" plain></el-button>
+          <el-button type="primary" icon="el-icon-edit" size="small" plain @click="showEditForm(scope.row)"></el-button>
+          <el-button type="danger" icon="el-icon-delete" size="small" plain @click="delCategories(scope.row)"></el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -31,6 +31,18 @@
       <span slot="footer" class="dialog-footer">
         <el-button @click="addDialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="addCategory">确 定</el-button>
+      </span>
+    </el-dialog>
+    <!-- 显示修改商品分类名称模态框 -->
+    <el-dialog title="修改商品分类名称" :visible.sync="editDialogVisible" width="40%">
+      <el-form ref="editForm" :model="editForm" :rules="rules" label-width="80px" status-icon>
+        <el-form-item label="分类名称" prop="cat_name">
+          <el-input v-model="editForm.cat_name"></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="editDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="editCategory">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -52,6 +64,14 @@ export default {
       addForm: {
         cat_name: '',
         cat_pid: []
+      },
+      editDialogVisible: false,
+      // 修改商品分类
+      editForm: {
+        cat_name: '',
+        cat_id: '',
+        cat_pid: '',
+        cat_level: ''
       },
       options: [],
       props: {
@@ -121,12 +141,12 @@ export default {
           return false
         }
         // 发送请求
-        let { cat_pid, cat_name } = this.addForm
+        let { cat_pid: catPid, cat_name: catName } = this.addForm
         let res = await this.axios.post(`categories`, {
-          cat_pid: cat_pid[cat_pid.length - 1] || 0, // 但下拉框不选择的时候  传的pid为0也就是一级菜单
+          cat_pid: catPid[catPid.length - 1] || 0, // 但下拉框不选择的时候  传的pid为0也就是一级菜单
           // cat_name: cat_name,
-          cat_name,
-          cat_level: cat_pid.length
+          cat_name: catName,
+          cat_level: catPid.length
         })
         let {
           meta: { status, msg }
@@ -138,6 +158,65 @@ export default {
           this.$message.success('添加商品分类信息成功')
         } else {
           this.$message.error(msg)
+        }
+      })
+    },
+    // 删除商品分类
+    async delCategories(categories) {
+      try {
+        await this.$confirm('此操作将永久删除该分类, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        })
+        // 发送请求
+        let res = await this.axios.delete(`categories/${categories.cat_id}`)
+        let {
+          meta: { status, msg }
+        } = res.data
+        if (status === 200) {
+          this.getCategoriesList()
+          this.$message.success('删除分类成功')
+        } else {
+          this.$message.error(msg)
+        }
+      } catch (e) {
+        this.$message.info('取消删除')
+      }
+    },
+    // 显示修改商品分类模态框
+    showEditForm(edit) {
+      this.editDialogVisible = true
+      // 将数据回显到输入框中
+      this.editForm.cat_id = edit.cat_id
+      this.editForm.cat_pid = edit.cat_pid
+      this.editForm.cat_name = edit.cat_name
+      this.editForm.cat_level = edit.cat_level
+    },
+    // 修改商品分类
+    editCategory() {
+      this.$refs.editForm.validate(async valid => {
+        if (!valid) {
+          return false
+        }
+        let { cat_id, cat_level, cat_pid, cat_name } = this.editForm
+        let res = await this.axios.put(`categories/${this.editForm.cat_id}`, {
+          cat_name,
+          cat_pid,
+          cat_id,
+          cat_level
+        })
+        let {
+          meta: { status }
+        } = res.data
+        console.log(res.data)
+
+        if (status === 200) {
+          this.editDialogVisible = false
+          this.$message.success('修改商品分类成功')
+          this.getCategoriesList()
+        } else {
+          this.$message.error('修改商品分类失败')
         }
       })
     }
