@@ -8,10 +8,14 @@ import Home from '@/components/Home'
 import Users from '@/components/users/Users'
 // 导入Right.vue组件
 import Rights from '@/components/rights/Rights'
-// 导入Categories.vue组件
-import Categories from '@/components/products/Categories'
 // 导入Roles.vue组件
 import Roles from '@/components/rights/Roles'
+// 导入Categories.vue组件
+import Categories from '@/components/products/Categories'
+// 导入Goods.vue组件
+import Goods from '@/components/products/Goods'
+// 导入Add.vue组件
+import Add from '@/components/products/Add'
 Vue.use(Router)
 
 let router = new Router({
@@ -50,6 +54,16 @@ let router = new Router({
           path: '/categories',
           name: 'categories',
           component: Categories
+        },
+        {
+          path: '/goods',
+          name: 'goods',
+          component: Goods
+        },
+        {
+          path: '/goods-add',
+          name: 'goods-add',
+          component: Add
         }
       ]
     }

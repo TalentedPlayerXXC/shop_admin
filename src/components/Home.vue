@@ -6,7 +6,7 @@
       <!-- el-submenu： 子导航 -->
       <!-- el-menu-item-group： 分组 -->
       <!-- el-menu-item ：每一项的菜单  -->
-      <el-menu :default-active="$route.path.slice(1)" class="el-menu-vertical-demo" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b" unique-opened router>
+      <el-menu :default-active="$route.path.slice(1).split('-')[0]" class="el-menu-vertical-demo" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b" unique-opened router>
         <el-submenu v-for="menu in menuList" :key="menu.id" :index="menu.path">
           <template slot="title">
             <i class="el-icon-location"></i>

@@ -9,6 +9,17 @@ import router from './router'
 import '@/assets/common.css'
 // 引入axios
 import axios from 'axios'
+// 引入moment
+import moment from 'moment'
+// 引入vue-quill-editor 富文本编辑器
+import VueQuillEditor from 'vue-quill-editor'
+
+// 引入vue-quill-editor 样式
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
+
+Vue.use(VueQuillEditor)
 // 把axios放到Vue原型上将来vue所有的实例都能用axios
 Vue.prototype.axios = axios
 // 1.给axios配置默认值
@@ -33,6 +44,10 @@ axios.interceptors.request.use(
 // 使用element ui插件
 Vue.use(ElementUI)
 Vue.config.productionTip = false
+// 定义全局过滤器 用于过滤时间
+Vue.filter('dateFilter', (input, format = 'YYYY-MM-DD HH:mm:ss') => {
+  return moment(input * 1000).format(format)
+})
 
 /* eslint-disable no-new */
 new Vue({
