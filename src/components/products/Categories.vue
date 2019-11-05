@@ -68,10 +68,7 @@ export default {
       editDialogVisible: false,
       // 修改商品分类
       editForm: {
-        cat_name: '',
-        cat_id: '',
-        cat_pid: '',
-        cat_level: ''
+        cat_name: ''
       },
       options: [],
       props: {
@@ -199,12 +196,9 @@ export default {
         if (!valid) {
           return false
         }
-        let { cat_id, cat_level, cat_pid, cat_name } = this.editForm
+        let { cat_name: catName } = this.editForm
         let res = await this.axios.put(`categories/${this.editForm.cat_id}`, {
-          cat_name,
-          cat_pid,
-          cat_id,
-          cat_level
+          cat_name: catName
         })
         let {
           meta: { status }
