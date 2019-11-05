@@ -116,9 +116,9 @@ export default {
       let {
         meta: { status }
       } = res.data
-      if(status === 201) {
-          this.$router.push('/goods')
-          this.$message.success('商品添加成功')
+      if (status === 201) {
+        this.$router.push('/goods')
+        this.$message.success('商品添加成功')
       }
     }
   },
@@ -137,10 +137,10 @@ export default {
   }
 }
 </script>
-<style lang="less">
+<style lang="less" scoped>
 .quill-editor {
   background-color: #fff;
-  .ql-editor {
+  /deep/ .ql-editor {
     height: 300px;
   }
 }
