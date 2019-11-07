@@ -29,9 +29,6 @@ const Add = () => import(/* webpackChunkName: "product" */ '@/components/product
 // 导入orders组件
 // import Orders from '@/components/orders/orders'
 const Orders = () => import(/* webpackChunkName: "order" */ '@/components/orders/Orders')
-// 导入report组件
-// import Report from '@/components/report/Report'
-const Reports = () => import('@/components/report/Reports')
 Vue.use(Router)
 
 let router = new Router({
