@@ -27,7 +27,7 @@
           <el-button type="danger" @click="logout" plain size="small">退出</el-button>
         </div>
         <div class="title">
-          <h3>电商后台管理系统</h3>
+          <h3>vue后台管理系统</h3>
         </div>
       </el-header>
       <el-main>
