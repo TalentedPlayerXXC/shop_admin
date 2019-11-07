@@ -16,6 +16,8 @@ import Categories from '@/components/products/Categories'
 import Goods from '@/components/products/Goods'
 // 导入Add.vue组件
 import Add from '@/components/products/Add'
+// 导入orders组件
+import Orders from '@/components/orders/orders'
 Vue.use(Router)
 
 let router = new Router({
@@ -64,6 +66,11 @@ let router = new Router({
           path: '/goods-add',
           name: 'goods-add',
           component: Add
+        },
+        {
+          path: '/orders',
+          name: 'orders',
+          component: Orders
         }
       ]
     }
