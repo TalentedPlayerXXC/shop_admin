@@ -67,10 +67,12 @@ export default {
     handleSizeChange(val) {
       this.current = 1
       this.pagesize = val
+      this.getOrderList()
     },
     // 跳页
     handleCurrentChange(val) {
       this.current = val
+      this.getOrderList()
     }
   },
   created() {
