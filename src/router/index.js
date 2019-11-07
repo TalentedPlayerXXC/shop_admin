@@ -1,23 +1,34 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 // 导入Login.vue组件
-import Login from '@/components/Login'
+
+// 按需加载
+// import Login from '@/components/Login'
+const Login = () => import('@/components/Login')
 // 导入Home.vue组件
-import Home from '@/components/Home'
+// import Home from '@/components/Home'
+const Home = () => import('@/components/Home')
 // 导入Users.vue组件
-import Users from '@/components/users/Users'
+// import Users from '@/components/users/Users'
+const Users = () => import('@/components/users/Users')
 // 导入Right.vue组件
-import Rights from '@/components/rights/Rights'
+// import Rights from '@/components/rights/Rights'
+const Rights = () => import('@/components/rights/Rights')
 // 导入Roles.vue组件
-import Roles from '@/components/rights/Roles'
+// import Roles from '@/components/rights/Roles'
+const Roles = () => import('@/components/rights/Roles')
 // 导入Categories.vue组件
-import Categories from '@/components/products/Categories'
+// import Categories from '@/components/products/Categories'
+const Categories = () => import('@/components/products/Categories')
 // 导入Goods.vue组件
-import Goods from '@/components/products/Goods'
+// import Goods from '@/components/products/Goods'
+const Goods = () => import('@/components/products/Goods')
 // 导入Add.vue组件
-import Add from '@/components/products/Add'
+// import Add from '@/components/products/Add'
+const Add = () => import('@/components/products/Add')
 // 导入orders组件
-import Orders from '@/components/orders/orders'
+// import Orders from '@/components/orders/orders'
+const Orders = () => import('@/components/orders/Orders')
 Vue.use(Router)
 
 let router = new Router({
