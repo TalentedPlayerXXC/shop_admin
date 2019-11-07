@@ -4,31 +4,34 @@ import Router from 'vue-router'
 
 // 按需加载
 // import Login from '@/components/Login'
-const Login = () => import('@/components/Login')
+const Login = () => import(/* webpackChunkName: "login" */ '@/components/Login')
 // 导入Home.vue组件
 // import Home from '@/components/Home'
-const Home = () => import('@/components/Home')
+const Home = () => import(/* webpackChunkName: "home" */ '@/components/Home')
 // 导入Users.vue组件
 // import Users from '@/components/users/Users'
-const Users = () => import('@/components/users/Users')
+const Users = () => import(/* webpackChunkName: "user" */ '@/components/users/Users')
 // 导入Right.vue组件
 // import Rights from '@/components/rights/Rights'
-const Rights = () => import('@/components/rights/Rights')
+const Rights = () => import(/* webpackChunkName: "right" */ '@/components/rights/Rights')
 // 导入Roles.vue组件
 // import Roles from '@/components/rights/Roles'
-const Roles = () => import('@/components/rights/Roles')
+const Roles = () => import(/* webpackChunkName: "right" */ '@/components/rights/Roles')
 // 导入Categories.vue组件
 // import Categories from '@/components/products/Categories'
-const Categories = () => import('@/components/products/Categories')
+const Categories = () => import(/* webpackChunkName: "product" */ '@/components/products/Categories')
 // 导入Goods.vue组件
 // import Goods from '@/components/products/Goods'
-const Goods = () => import('@/components/products/Goods')
+const Goods = () => import(/* webpackChunkName: "product" */ '@/components/products/Goods')
 // 导入Add.vue组件
 // import Add from '@/components/products/Add'
-const Add = () => import('@/components/products/Add')
+const Add = () => import(/* webpackChunkName: "product" */ '@/components/products/Add')
 // 导入orders组件
 // import Orders from '@/components/orders/orders'
-const Orders = () => import('@/components/orders/Orders')
+const Orders = () => import(/* webpackChunkName: "order" */ '@/components/orders/Orders')
+// 导入report组件
+// import Report from '@/components/report/Report'
+const Reports = () => import('@/components/report/Reports')
 Vue.use(Router)
 
 let router = new Router({
