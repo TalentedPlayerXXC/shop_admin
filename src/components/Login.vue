@@ -59,7 +59,7 @@ export default {
             // 把返回的token存储起来
             // 注意 要先存token在跳路由
             localStorage.setItem('token', res.data.data.token)
-            this.$router.push('home')
+            this.$router.push('welcome')
           } else {
             // 登录失败
             this.$message.error('用户名或密码错误')

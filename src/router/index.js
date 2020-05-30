@@ -29,6 +29,11 @@ const Add = () => import(/* webpackChunkName: "product" */ '@/components/product
 // 导入orders组件
 // import Orders from '@/components/orders/orders'
 const Orders = () => import(/* webpackChunkName: "order" */ '@/components/orders/Orders')
+// 导入Reports组件
+// import Orders from '@/components/orders/orders'
+const Reports = () => import(/* webpackChunkName: "report" */ '@/components/report/Reports')
+// 导入Welcome组件
+const Welcome = () => import(/* webpackChunkName: "report" */ '@/components/welcome/Welcome')
 Vue.use(Router)
 
 let router = new Router({
@@ -82,6 +87,16 @@ let router = new Router({
           path: '/orders',
           name: 'orders',
           component: Orders
+        },
+        {
+          path: '/reports',
+          name: 'reports',
+          component: Reports
+        },
+        {
+          path: '/welcome',
+          name: 'welcome',
+          component: Welcome
         }
       ]
     }

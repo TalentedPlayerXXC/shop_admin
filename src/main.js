@@ -4,7 +4,7 @@ import ElementUI from 'element-ui'
 // 引入element ui 的样式
 import 'element-ui/lib/theme-chalk/index.css'
 import App from './App'
-import router from './router'
+import router from './router/index'
 // 引入通用样式
 import '@/assets/common.css'
 // 引入axios
@@ -43,6 +43,7 @@ axios.interceptors.request.use(
 
 // 使用element ui插件
 Vue.use(ElementUI)
+// 阻止显示生产模式
 Vue.config.productionTip = false
 // 定义全局过滤器 用于过滤时间
 Vue.filter('dateFilter', (input, format = 'YYYY-MM-DD HH:mm:ss') => {

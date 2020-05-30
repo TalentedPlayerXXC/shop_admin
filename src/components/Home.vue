@@ -6,13 +6,25 @@
       <!-- el-submenu： 子导航 -->
       <!-- el-menu-item-group： 分组 -->
       <!-- el-menu-item ：每一项的菜单  -->
-      <el-menu :default-active="$route.path.slice(1).split('-')[0]" class="el-menu-vertical-demo" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b" unique-opened router>
+      <el-menu
+        :default-active="$route.path.slice(1).split('-')[0]"
+        class="el-menu-vertical-demo"
+        background-color="#545c64"
+        text-color="#fff"
+        active-text-color="#ffd04b"
+        unique-opened
+        router
+      >
         <el-submenu v-for="menu in menuList" :key="menu.id" :index="menu.path">
           <template slot="title">
             <i class="el-icon-location"></i>
             <span>{{ menu.authName }}</span>
           </template>
-          <el-menu-item v-for="item in menu.children" :key="item.id" :index="item.path">
+          <el-menu-item
+            v-for="item in menu.children"
+            :key="item.id"
+            :index="item.path"
+          >
             <i class="el-icon-menu"></i>
             <span slot="title">{{ item.authName }}</span>
           </el-menu-item>
@@ -24,7 +36,9 @@
         <div class="logo"></div>
         <div class="logout">
           <span>欢迎登入!</span>
-          <el-button type="danger" @click="logout" plain size="small">退出</el-button>
+          <el-button type="danger" @click="logout" plain size="small"
+            >退出</el-button
+          >
         </div>
         <div class="title">
           <h3>vue后台管理系统</h3>
